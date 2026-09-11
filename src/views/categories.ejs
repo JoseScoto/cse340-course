@@ -5,10 +5,11 @@
         </h1>
         <h2>Categories</h2>
         <ul class="category-list">
-            <li class="category-tag">Environmental</li>
-            <li class="category-tag">Educational</li>
-            <li class="category-tag">Community Service</li>
-            <li class="category-tag">Health and Wellness</li>
+            <% categories.forEach(category=> { %>
+                <li class="category-tag">
+                    <%= category.name %>
+                </li>
+                <% }); %>
         </ul>
     </main>
     <%- include('partials/footer') %>

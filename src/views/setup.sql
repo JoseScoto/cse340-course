@@ -171,3 +171,83 @@ VALUES
  '2026-09-20',
  '2026-09-20',
  'Planned');
+
+ -- ========================================
+-- Create Categories Table
+-- ========================================
+
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- ========================================
+-- Insert Sample Categories
+-- ========================================
+
+INSERT INTO category (name)
+VALUES
+('Construction'),
+('Environment'),
+('Community Support');
+
+
+-- ========================================
+-- Create Service Project Categories Table
+-- Junction table for many-to-many relationship
+-- ========================================
+
+CREATE TABLE service_project_category (
+    project_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    CONSTRAINT fk_spc_project
+        FOREIGN KEY (project_id)
+        REFERENCES service_project(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_spc_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(category_id)
+        ON DELETE CASCADE
+);
+
+
+-- ========================================
+-- Associate Projects with Categories
+-- ========================================
+
+INSERT INTO service_project_category (project_id, category_id)
+VALUES
+
+-- BrightFuture Builders
+(1, 1),  -- Community Center Renovation -> Construction
+(2, 1),  -- Neighborhood Playground Build -> Construction
+(2, 3),  -- Neighborhood Playground Build -> Community Support
+(3, 1),  -- Affordable Housing Repair Day -> Construction
+(3, 3),  -- Affordable Housing Repair Day -> Community Support
+(4, 2),  -- Solar Lighting Installation -> Environment
+(4, 1),  -- Solar Lighting Installation -> Construction
+(5, 1),  -- School Accessibility Upgrade -> Construction
+(5, 3),  -- School Accessibility Upgrade -> Community Support
+
+-- GreenHarvest Growers
+(6, 2),  -- Community Garden Expansion -> Environment
+(7, 2),  -- Urban Farming Workshop -> Environment
+(7, 3),  -- Urban Farming Workshop -> Community Support
+(8, 2),  -- School Garden Project -> Environment
+(8, 3),  -- School Garden Project -> Community Support
+(9, 2),  -- Neighborhood Compost Program -> Environment
+(9, 3),  -- Neighborhood Compost Program -> Community Support
+(10, 2), -- Fresh Produce Distribution -> Environment
+(10, 3), -- Fresh Produce Distribution -> Community Support
+
+-- UnityServe Volunteers
+(11, 3), -- Food Bank Volunteer Day -> Community Support
+(12, 2), -- Park Cleanup Initiative -> Environment
+(12, 3), -- Park Cleanup Initiative -> Community Support
+(13, 3), -- Senior Assistance Program -> Community Support
+(14, 3), -- Charity Clothing Drive -> Community Support
+(15, 3); -- Youth Mentoring Day -> Community Support
