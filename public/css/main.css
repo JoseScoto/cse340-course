@@ -157,6 +157,12 @@ p {
   margin: 2rem auto 0;
 }
 
+.home {
+  text-align: center;
+}
+.home p {
+  margin-inline: auto;
+}
 /* ---- Cards / lists ------------------------------------------------------ */
 
 .org-list {
