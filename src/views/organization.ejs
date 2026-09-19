@@ -13,12 +13,12 @@
         </p>
 
         <h3>Service Projects</h3>
-        <ul class="org-list">
+        <ul class="project-list">
             <% projects.forEach(project=> { %>
-                <li class="org-card"><a href="/project/<%= project.project_id %>">
+                <li><a href="/project/<%= project.project_id %>">
                         <%= project.title %>
                     </a></li>
-                <% }) %>
+                <% }); %>
         </ul>
     </main>
     <%- include('partials/footer') %>
