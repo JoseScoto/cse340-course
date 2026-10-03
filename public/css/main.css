@@ -346,6 +346,41 @@ button[type="submit"]:hover {
   border-color: #bee5eb;
 }
 
+/* ---- Registered Users Table -------------------------------------------------------------- */
+.users-table-wrap {
+  margin-top: 1.5rem;
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.users-table th,
+.users-table td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: var(--border);
+}
+
+.users-table th {
+  background:var(--color-accent-bg);
+  color: var(--color-accent-dark);
+  font-weight: 600;
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.users-table tbody tr:hover {
+  background: #F5FAFC;
+}
+
 /* ---- Footer -------------------------------------------------------------- */
 
 .site-footer {
