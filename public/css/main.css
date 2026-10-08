@@ -381,6 +381,34 @@ button[type="submit"]:hover {
   background: #F5FAFC;
 }
 
+/* ---- Volunteer Form -------------------------------------------------------------- */
+.volunteer-form {
+  margin: 0.5rem 0;
+}
+
+.volunteer-form button[type="submit"] {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  padding: 0.25rem 0;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.volunteer-form button[type="submit"]:hover {
+  background: transparent;
+  text-decoration-thickness: 2px;
+}
+
+.volunteer-projects {
+  padding-left: 1.5rem;
+}
+
+.volunteer-projects>li {
+  margin-bottom: 1.5rem;
+}
+
 /* ---- Footer -------------------------------------------------------------- */
 
 .site-footer {

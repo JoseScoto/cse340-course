@@ -4,6 +4,7 @@ import { getUpcomingProjects, getProjectDetails } from '../models/projects.js';
 import { getCategoriesByProjectId } from '../models/categories.js';
 import { getAllOrganizations } from '../models/organizations.js';
 import { body, validationResult } from 'express-validator';
+import { isUserVolunteering } from '../models/volunteers.js';
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
@@ -36,13 +37,48 @@ const showProjectsPage = async (req, res) => {
     res.render('projects', { title, projects });
 };
 
-const showProjectDetailsPage = async (req, res) => {
-    const projectId = req.params.id;
-    const project = await getProjectDetails(projectId);
-    const categories = await getCategoriesByProjectId(projectId);
-    const title = 'Project Details';
+const showProjectDetailsPage = async (req, res, next) => {
+    const projectId = Number(req.params.id);
 
-    res.render('project', { title, project, categories });
+    try {
+        if (
+            !Number.isInteger(projectId) ||
+            projectId < 1 ||
+            projectId > 2147483647
+        ) {
+            const error = new Error('Project not found.');
+            error.status = 404;
+            return next(error);
+        }
+
+        const project = await getProjectDetails(projectId);
+
+        if (!project) {
+            const error = new Error('Project not found.');
+            error.status = 404;
+            return next(error);
+        }
+
+        const categories = await getCategoriesByProjectId(projectId);
+
+        let isVolunteering = false;
+
+        if (req.session.user) {
+            isVolunteering = await isUserVolunteering(
+                req.session.user.user_id,
+                projectId
+            );
+        }
+
+        res.render('project', {
+            title: 'Project Details',
+            project,
+            categories,
+            isVolunteering
+        });
+    } catch (error) {
+        next(error);
+    }
 };
 
 const showNewProjectForm = async (req, res) => {

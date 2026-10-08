@@ -11,6 +11,45 @@
         <p>Username: <%= email %>
         </p>
 
+        <section aria-labelledby="my-projects-heading">
+            <h2 id="my-projects-heading">My Volunteer Projects</h2>
+        
+            <% if (volunteerProjects.length===0) { %>
+                <p>You have not volunteered for any projects yet.</p>
+                <p><a href="/projects">Browse service projects</a></p>
+                <% } else { %>
+                    <ul class="volunteer-projects">
+                        <% volunteerProjects.forEach(project=> { %>
+                            <li>
+                                <a href="/project/<%= project.project_id %>">
+                                    <%= project.title %>
+                                </a>
+        
+                                <p>
+                                    <strong>Date:</strong>
+                                    <%= new Date(project.date).toLocaleDateString( 'en-US' , { year: 'numeric' , month: 'long' ,
+                                        day: 'numeric' } ) %>
+                                </p>
+        
+                                <p>
+                                    <strong>Location:</strong>
+                                    <%= project.location || 'Not specified' %>
+                                </p>
+        
+                                <form class="volunteer-form" action="/project/<%= project.project_id %>/remove-volunteer"
+                                    method="post">
+                                    <input type="hidden" name="returnTo" value="dashboard">
+        
+                                    <button type="submit">
+                                        Remove my signup for <%= project.title %>
+                                    </button>
+                                </form>
+                            </li>
+                            <% }); %>
+                    </ul>
+                    <% } %>
+        </section>
+
         <% if (user && user.role_name === 'admin') { %>
             <h2>User Management</h2>
             <p><a href="/users">View Registered Users</a></p>

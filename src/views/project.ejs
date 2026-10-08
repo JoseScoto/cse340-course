@@ -28,10 +28,36 @@
                 </li>
                 <% }); %>
         </ul>
-        <<% if (user && user.role_name === 'admin') { %>
+        <% if (user && user.role_name === 'admin') { %>
             <p><a href="/assign-categories/<%= project.project_id %>">Edit Categories</a></p>
             <p><a href="/edit-project/<%= project.project_id %>">Edit Project</a></p>
         <% } %>
+
+        <% if (user) { %>
+            <section aria-labelledby="volunteer-heading">
+                <h2 id="volunteer-heading">Volunteer</h2>
+        
+                <% if (isVolunteering) { %>
+                    <p>You are volunteering for this project.</p>
+        
+                    <form class="volunteer-form" action="/project/<%= project.project_id %>/remove-volunteer" method="post">
+                        <input type="hidden" name="returnTo" value="project">
+        
+                        <button type="submit">
+                            Remove my volunteer signup
+                        </button>
+                    </form>
+                    <% } else { %>
+                        <form class="volunteer-form" action="/project/<%= project.project_id %>/volunteer" method="post">
+                            <button type="submit">
+                                Volunteer for this project
+                            </button>
+                        </form>
+                        <% } %>
+        
+                            <p><a href="/dashboard">View my volunteer projects</a></p>
+            </section>
+            <% } %>
 
     </main>
     

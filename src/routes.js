@@ -40,6 +40,11 @@ import {
     requireRole,
     showUsers
 } from './controllers/users.js';
+import {
+    volunteerValidation,
+    processVolunteerSignup,
+    processVolunteerRemoval
+} from './controllers/volunteers.js';
 
 const router = express.Router();
 
@@ -61,7 +66,7 @@ router.post('/new-organization', requireRole('admin'), organizationValidation, p
 router.get('/edit-organization/:id', requireRole('admin'), showEditOrganizationForm);
 
 // Route to handle the edit organization form submission
-router.post('/edit-organization/:id', organizationValidation, processEditOrganizationForm);
+router.post('/edit-organization/:id', requireRole('admin'), organizationValidation, processEditOrganizationForm);
 
 // Route for new project page
 router.get('/new-project', requireRole('admin'), showNewProjectForm);
@@ -108,5 +113,21 @@ router.get('/dashboard', requireLogin, showDashboard);
 
 // Protecting the URL
 router.get('/users', requireLogin, requireRole('admin'), showUsers);
+
+// Submitting a volunteer 
+router.post(
+    '/project/:projectId/volunteer',
+    requireLogin,
+    volunteerValidation,
+    processVolunteerSignup
+);
+
+// Removing a volunteer
+router.post(
+    '/project/:projectId/remove-volunteer',
+    requireLogin,
+    volunteerValidation,
+    processVolunteerRemoval
+);
 
 export default router;
